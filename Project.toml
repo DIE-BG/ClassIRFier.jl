@@ -1,0 +1,10 @@
+name = "ClassIRFier.jl"
+
+[deps]
+DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
+HuggingFaceHub = "d0076355-e2c0-48e6-a044-05906e51b7fc"
+ONNXRunTime = "e034b28e-924e-41b2-b98f-d2bbeb830c6a"
+
+[compat]
+DrWatson = "2.19.1"
+julia = "1.12.1"
