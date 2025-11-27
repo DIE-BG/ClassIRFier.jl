@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400">
+  <path d="M50 250 Q100 150 150 180 T250 200" stroke="#4caf50" fill="none" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="300" cy="150" r="20" fill="#CB3C33"/>
+  <circle cx="300" cy="220" r="20" fill="#389826"/>
+  <circle cx="300" cy="290" r="20" fill="#9558B2"/>
+  <circle cx="420" cy="220" r="25" fill="#4063D8"/>
+  <line x1="320" y1="150" x2="395" y2="220" stroke="#555" stroke-width="6"/>
+  <line x1="320" y1="220" x2="395" y2="220" stroke="#555" stroke-width="6"/>
+  <line x1="320" y1="290" x2="395" y2="220" stroke="#555" stroke-width="6"/>
+  <path d="M470 220 l20 20 l40 -50" stroke="#389826" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="150" y="360" font-size="60" font-family="Arial" fill="#333">ClassIRFier.jl</text>
+</svg>
