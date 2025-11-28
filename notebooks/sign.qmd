@@ -1,0 +1,34 @@
+Suppose that we have an IRF $\{\phi_t\}_{t=1}^T$.
+
+The idea is to classify the sign of an IRF by the area under the curve described by its trajectory.
+
+In that sense, we need to measure the area above and below the horizontal axis, as well as the total net area.
+$$
+\begin{align}
+A^{+} &= \sum_{t=1}^T \max(\phi_t, 0)\\
+A^{-} &= \sum_{t=1}^T \max(-\phi_t, 0)\\
+A &= A^{+} + A^{-}
+\end{align}
+$$
+
+Then we need to establish a criterion to classify an IRF. This is the purpose of the function $s$:
+
+$$
+s(A^{+}, A^{-}, A; \delta, \eta) = \begin{cases}
+1, & A < \delta\\
+2, & A \geq \delta \land \dfrac{A^{+}}{A} \geq 1 - \eta\\
+3, & A \geq \delta \land \dfrac{A^{-}}{A} \geq 1 - \eta\\
+4, & \text{otherwise}
+\end{cases}
+$$
+
+The parameter $\delta$ defines a tolerance level used to classify a non-response. This is useful because the representation of zero is often approximate. On the other hand, the parameter $\eta \in [0, 1]$ represents the amount of area of the opposite sign allowed to be present in the IRF.
+
+The categories are mapped as follows:
+
+- $s(.) = 1$: No response.
+- $s(.) = 2$: Mainly positive response.
+- $s(.) = 3$: Mainly negative response.
+- $s(.) = 4$: Mixed response.
+
+Each category follows from the common intuition used to classify IRFs according to the sign of the response.
