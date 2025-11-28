@@ -1,9 +1,10 @@
 name = "ClassIRFier.jl"
 
 [deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
-HuggingFaceHub = "d0076355-e2c0-48e6-a044-05906e51b7fc"
-ONNXRunTime = "e034b28e-924e-41b2-b98f-d2bbeb830c6a"
+MacroModelling = "687ffad2-3618-405e-ac50-e0f7b9c75e44"
+StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [compat]
 DrWatson = "2.19.1"
