@@ -1,0 +1,24 @@
+An IRF is a function $\phi$ defined over time $t \in \mathbb{N}$.
+
+In practice, an IRF is considered acceptable when it satisfies several qualitative characteristics, such as:
+
+- **Smoothness:** The response should not display abrupt jumps between consecutive periods.
+- **Oscillation:** Ideally, the IRF should exhibit minimal oscillatory behavior.
+- **Sign:** In many applications, the response is expected to remain mostly positive or mostly negative.
+- **Persistence:** The duration for which the IRF stays “far” from zero or from its steady state.
+- **Strength:** The magnitude of the response relative to the initial shock.
+
+Researchers typically do not have precise numerical preferences regarding the intensity of these characteristics, but they can easily recognize when an IRF behaves in a way that contradicts their expectations.
+
+The purpose of the **IRF Classifier** is to formalize these qualitative characteristics in an interpretable and general manner—e.g., smooth vs. non-smooth, positive vs. negative—allowing for the systematic selection of IRFs that satisfy sign or shape restrictions.
+
+Some conventions are required to represent an IRF as an input for a Neural Network, such as:
+
+- **Length of the IRF:** The number of periods $t$ included. Using excessively long IRFs (e.g., 200 periods) is unnecessary because the response eventually converges to zero. A shorter horizon that still captures the essential shape—typically around 50 periods for monthly data—is sufficient.
+- **Magnitude normalization:** The scale of the response depends on the variable represented by the IRF. It is common practice to normalize responses relative to the standard deviation of the shocks.
+
+The classification engine may consist of a single model capable of classifying all characteristics simultaneously, or a set of specialized models, each focused on a single characteristic.
+
+Regardless of the chosen architecture, each model must be trained on a set of IRFs that faithfully represents the types of examples encountered in practice.
+
+The classification engine should also be flexible enough to be retrained with new examples and to incorporate new characteristics as needed.
