@@ -1,0 +1,84 @@
+We need to simulate IRFs with different shapes. On the other hand, we want the simplest form to represent a VAR model.
+
+Given the $VAR(p)$:
+
+$$
+y_t = A_1 y_{t-1} + \cdots + A_p y_{t-p} + u_t
+$$
+
+We omit the intercept because it is not essential for the simulation of IRFs. This is a system of $K$ variables, meaning that $y_t \in \mathbb{R}^{K \times 1}$.
+
+We express the $VAR(p)$ as a $VAR(1)$ in order to analyze some properties required for a valid IRF.
+
+$$
+\left[
+    \begin{array}{c}
+        y_t \\
+        y_{t-1} \\
+        \vdots \\
+        y_{t-p+1} \\
+    \end{array}
+\right]_{Kp \times 1}
+= 
+\left[
+    \begin{array}{ccccc}
+    A_1 & A_2 & A_3 & \cdots & A_p\\
+    \mathbf{0}_{K \times K} & I_K & \mathbf{0}_{K \times K} & \cdots & \mathbf{0}_{K \times K}\\
+    \mathbf{0}_{K \times K} & \mathbf{0}_{K \times K} & I_K & \cdots & \mathbf{0}_{K \times K}\\
+    \vdots & \vdots & \vdots & \ddots & \vdots\\
+    \mathbf{0}_{K \times K} & \mathbf{0}_{K \times K} & \mathbf{0}_{K \times K} & \cdots & I_K\\
+    \end{array}
+\right]_{Kp \times Kp}
+\left[
+    \begin{array}{c}
+        y_{t-1} \\
+        y_{t-2} \\
+        \vdots \\
+        y_{t-p} \\
+    \end{array}
+\right]_{Kp \times 1}
++
+\left[
+    \begin{array}{c}
+        u_t \\
+        0 \\
+        \vdots \\
+        0 \\
+    \end{array}
+\right]_{Kp \times 1}
+$$
+
+$$
+z_t = \mathbf{A} z_{t-1} + \mathbf{u}_t
+$${#eq-var1_representation}
+
+Our main goal is to simulate stable VAR models. For that, the following condition must be imposed during the simulation:
+
+$$
+|\lambda_i(\mathbf{A})| < 1, \quad i = 1, 2, \dots, K
+$${#eq-stability_condition}
+
+This means that we only need to check the eigenvalues of $\mathbf{A}$ to ensure that the $VAR(p)$ is stable.
+
+Next, we derive a closed-form expression for the IRF.
+
+Assuming the initial condition:
+
+$$
+y_1 = u_1
+$$
+
+the IRF at horizon $s$ is given by:
+
+$$
+y_s = \mathbf{J}\, \mathbf{A}^{\,s-1} u_1
+$${#eq-IRF_function}
+
+Here, $\mathbf{J} \in \{0, 1\}^{Kp \times 1}$ has a value of 1 only in the elements of $z_t$ that we want to extract.
+
+Thus, the steps are:
+
+1. Select a distribution for $u_t$ such that $\mathbb{E}(u_t)$ is well defined.
+2. Parameterize $\mathbf{A}$ while checking the stability condition in @eq-stability_condition.
+3. Simulate $u_1 \sim u_t$. Just use a random vector as the Std of the distribution.
+4. Save the IRFs.
