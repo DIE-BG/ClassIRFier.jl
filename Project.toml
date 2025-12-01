@@ -1,10 +1,8 @@
 name = "ClassIRFier.jl"
 
 [deps]
-CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
-MacroModelling = "687ffad2-3618-405e-ac50-e0f7b9c75e44"
-StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [compat]
 DrWatson = "2.19.1"
