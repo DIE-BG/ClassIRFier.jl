@@ -11,14 +11,14 @@ IRF_DIR = mkpath(datadir("irf"))
 
 # simulation grid for the
 grid = Dict(
-    :K => [2, 3],
-    :p => [1, 2, 3],
-    :dist => [Uniform(-1, 1), Normal(0, 1)],
+    :K => 2,
+    :p => [1, 2],
+    :dist => [Uniform(-1, 1), Normal(0, 1), Uniform(0, 1)],
     :h => [40, 50],
 ) |> dict_list
 
 # definition of the simulation given the parameters
-function makesim(nsim::Int = 50; kwargs...)
+function makesim(nsim::Int = 100; kwargs...)
     h = kwargs[:h]
     K = kwargs[:K]
     p = kwargs[:p]
@@ -46,7 +46,7 @@ for (i, g) in enumerate(grid)
     irf = [irf..., makesim(; g...)...]
 end
 
-safesave(joinpath(IRF_DIR, "example_irf.jld2"), Dict(:sim => irf))
+safesave(joinpath(IRF_DIR, "irf.jld2"), Dict(:sim => irf))
 
 # exploring the irf realizations
 using CairoMakie
