@@ -1,6 +1,6 @@
 module Heads
 
-export head_sign, head_sign_training_target
+export head_sign
 
 
 """
