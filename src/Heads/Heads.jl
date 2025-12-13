@@ -17,4 +17,7 @@ module Heads
 export head_sign
 include(joinpath(@__DIR__, "head_sign.jl"))
 
+export head_oscillation
+include(joinpath(@__DIR__, "head_oscillation.jl"))
+
 end
