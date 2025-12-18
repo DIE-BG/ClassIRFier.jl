@@ -17,7 +17,14 @@ using Distributions
 
 export VAR, simulate_irf
 
+
+"""
+    AbstractVAR
+
+Abstract supertype for all VAR model types.
+"""
 abstract type AbstractVAR end
+
 """
     VAR <: AbstractVAR
 
@@ -54,6 +61,17 @@ struct VAR <: AbstractVAR
         return new(K, p, A)
     end
 
+
+    """
+        Base.show(io::IO, v::VAR)
+
+    Custom display for the VAR type, showing the number of variables and lag order.
+    """
+    function Base.show(io::IO, v::VAR)
+        return print(io, "VAR(K=$(v.K), p=$(v.p))")
+    end
+
+
     """
         VAR(K, p, [dist])
 
@@ -89,7 +107,7 @@ end
 """
     VAR(coefs::Vector{Matrix{Float32}})
 
-Construct a VAR object from a list of K×K coefficient matrices, assembling the companion matrix automatically.
+Construct a VAR object from a vector of K×K coefficient matrices, automatically assembling the companion matrix.
 
 # Arguments
 - `coefs::Vector{Matrix{Float32}}`: List of p coefficient matrices, each of size K×K (Float32).
