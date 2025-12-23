@@ -2,25 +2,63 @@ using DrWatson
 @quickactivate "ClassIRFier"
 
 using ClassIRFier
-using Distributions
-using CairoMakie
+using UnicodePlots
+
+TEST_DATA_DIR = datadir("test")
+
+# loading some test IRFs whit different levels of smoothness
+irf0 = zeros(Float32, 40)
+irf1 = Float32.(load(joinpath(TEST_DATA_DIR, "test_4.jld2"))["irf"])
+irf2 = load(joinpath(TEST_DATA_DIR, "test_7.jld2"))["irf"]
+irf3 = load(joinpath(TEST_DATA_DIR, "test_8.jld2"))["irf"]
+
+function head_smoothness1(ϕ::Vector{<:AbstractFloat})
+    # Total Variation TV
+    TV = sum(abs.(diff(ϕ)))
+    # Normalized Total Variation TV_n
+    TV_n = TV / sum(abs.(ϕ))
+    # Smoothness measure (the higher, the smoother)
+    return 1 / (1 + TV_n)
+end
+
+function head_smoothness2(ϕ::Vector{<:AbstractFloat})
+    # Roughness
+    R = sum((ϕ |> diff |> diff) .^ 2)
+    # Normalized Roughness R_n
+    R_n = R / sum(ϕ .^ 2)
+    # Smoothness measure (the higher, the smoother)
+    return 1 / (1 + R_n)
+end
 
 # the distributions helps to control the shape of the IRFs, determining the
 # oscillation and sign properties
-var = VAR(2, 2, Uniform(-0.2, 3))
-# with a stable VAR, we can simulate IRFs. the shock size i s set to 1 by default
-sim_irf = simulate_irf(var, 40)
 
+function test_heads(ϕ::Vector{Float32})
 
-@info "Sign 1:" head_sign(sim_irf[1])
-@info "Sign 2:" head_sign(sim_irf[2])
+    plt1 = lineplot(ϕ, name = "ϕ")
+    plt2 = lineplot(abs.(diff(ϕ)), name = "|Δϕ|")
+    plt3 = lineplot((ϕ |> diff |> diff) .^ 2, name = "(Δ²ϕ)²")
 
-@info "Oscillation 1:" head_oscillation(sim_irf[1])
-@info "Oscillation 2:" head_oscillation(sim_irf[2])
+    UnicodePlots.show(plt1)
+    println("\n")
+    UnicodePlots.show(plt2)
+    println("\n")
+    UnicodePlots.show(plt3)
+    println("\n")
 
-fig = Figure()
-ax1 = Axis(fig[1, 1], title = "IRF: 1")
-ax2 = Axis(fig[2, 1], title = "IRF: 2")
-lines!(ax1, sim_irf[1])
-lines!(ax2, sim_irf[2])
-fig
+    logs = """Test Heads Results:
+        - Sign: $(head_sign(ϕ))
+        - Oscillation: $(head_oscillation(ϕ))
+        - Smoothness 1 (TV-based): $(head_smoothness1(ϕ))
+        - Smoothness 2 (Roughness-based): $(head_smoothness2(ϕ))
+            ⋅ Smoothness avg: $((head_smoothness1(ϕ) + head_smoothness2(ϕ)) / 2)
+    """
+    @info logs
+
+    return nothing
+end
+
+test_heads(irf0)
+test_heads(irf1)
+test_heads(irf2)
+test_heads(irf3)
