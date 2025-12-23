@@ -1,13 +1,14 @@
-using DrWatson
-@quickactivate "ClassIRFier"
-
 module ClassIRFier
-    using Reexport
+using Reexport
 
-    include(srcdir("VARUtils", "VARUtils.jl"))
-    @reexport using .VARUtils
+include(joinpath(@__DIR__, "VARUtils", "VARUtils.jl"))
+@reexport using .VARUtils
 
 
-    include(srcdir("Heads", "Heads.jl"))
-    @reexport using .Heads
+include(joinpath(@__DIR__, "Heads", "Heads.jl"))
+@reexport using .Heads
+
+include(joinpath(@__DIR__, "SmoothIRF", "SmoothIRF.jl"))
+@reexport using .SmoothIRF
+
 end
